@@ -75,6 +75,7 @@ class SandwichMaker extends Component {
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disableInfo}
+          price={this.state.totalPrice}
         />
       </Aux>
     );
