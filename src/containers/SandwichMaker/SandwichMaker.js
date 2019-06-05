@@ -85,6 +85,9 @@ class SandwichMaker extends Component {
     this.setState({purchasing: false})
   }
 
+  purchaseContinueHandler = () => {
+    alert('continue')
+  }
 
   render() {
 
@@ -98,7 +101,10 @@ class SandwichMaker extends Component {
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-          <OrderSummary ingredients={this.state.ingredients} />
+          <OrderSummary 
+            purchaseCancelled={this.purchaseCancelHandler}
+            purchaseContinued={this.purchaseContinueHandler}
+            ingredients={this.state.ingredients} />
         </Modal>
         <Sandwich ingredients={this.state.ingredients} />
         <BuildControls 
