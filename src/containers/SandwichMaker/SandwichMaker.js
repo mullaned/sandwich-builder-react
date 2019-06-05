@@ -21,7 +21,8 @@ class SandwichMaker extends Component {
       meat: 0
     },
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    purchasing: false,
   }
 
   addIngredientHandler = (type) => {
@@ -76,6 +77,10 @@ class SandwichMaker extends Component {
     this.setState({purchasable: sum > 0})
   }
 
+  purchaseHandler = () => {
+    this.setState({purchasing: true})
+  }
+
 
   render() {
 
@@ -88,7 +93,7 @@ class SandwichMaker extends Component {
 
     return (
       <Aux>
-        <Modal>
+        <Modal show={this.state.purchasing}>
           <OrderSummary ingredients={this.state.ingredients} />
         </Modal>
         <Sandwich ingredients={this.state.ingredients} />
@@ -98,6 +103,7 @@ class SandwichMaker extends Component {
           disabled={disableInfo}
           price={this.state.totalPrice}
           purchasable={this.state.purchasable}
+          ordered={this.purchaseHandler}
         />
       </Aux>
     );
