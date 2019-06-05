@@ -104,6 +104,7 @@ class SandwichMaker extends Component {
           <OrderSummary 
             purchaseCancelled={this.purchaseCancelHandler}
             purchaseContinued={this.purchaseContinueHandler}
+            price={this.state.totalPrice}
             ingredients={this.state.ingredients} />
         </Modal>
         <Sandwich ingredients={this.state.ingredients} />
