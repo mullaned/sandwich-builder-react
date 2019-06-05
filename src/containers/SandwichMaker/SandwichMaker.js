@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Auxilary'
 import Sandwich from '../../components/Sandwich/Sandwich'
 import BuildControls from '../../components/Sandwich/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderSummary from '../../components/Sandwich/OrderSummary/OrderSummary'
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -18,7 +20,8 @@ class SandwichMaker extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4
+    totalPrice: 4,
+    purchasable: false
   }
 
   addIngredientHandler = (type) => {
@@ -35,6 +38,7 @@ class SandwichMaker extends Component {
       const newPrice = oldPrice + priceAddition;
 
       this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+      this.updatePurchaseState(updatedIngredients);
   }
 
   removeIngredientHandler = (type) => {
@@ -55,7 +59,21 @@ class SandwichMaker extends Component {
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice - priceAddition;
 
-    this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+    this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+    this.updatePurchaseState(updatedIngredients);
+  }
+
+  updatePurchaseState (ingredients) {
+    
+    const sum = Object.keys(ingredients)
+        .map(igKey => {
+          return ingredients[igKey];
+        })
+        .reduce((sum, el) => {
+          return sum + el;
+        }, 0);
+
+    this.setState({purchasable: sum > 0})
   }
 
 
@@ -70,12 +88,16 @@ class SandwichMaker extends Component {
 
     return (
       <Aux>
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Sandwich ingredients={this.state.ingredients} />
         <BuildControls 
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           disabled={disableInfo}
           price={this.state.totalPrice}
+          purchasable={this.state.purchasable}
         />
       </Aux>
     );
