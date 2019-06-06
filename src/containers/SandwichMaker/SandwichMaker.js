@@ -6,6 +6,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Sandwich/OrderSummary/OrderSummary'
 import axios from '../../axios-order'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -153,4 +154,4 @@ class SandwichMaker extends Component {
   }
 }
 
-export default SandwichMaker;
+export default withErrorHandler(SandwichMaker, axios);
