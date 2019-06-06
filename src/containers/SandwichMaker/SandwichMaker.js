@@ -17,16 +17,22 @@ const INGREDIENT_PRICES = {
 class SandwichMaker extends Component {
 
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    },
+    ingredients: null,
     totalPrice: 4,
     purchasable: false,
     purchasing: false,
-    loading: false
+    loading: false,
+    error: false
+  }
+
+  componentDidMount() {
+    axios.get('https://sandwich-maker-388c0.firebaseio.com/ingredients.json')
+      .then(response => {
+        this.setState({ingredients: response.data});
+      })
+      .catch(error => {
+        this.setState({error: true})
+      });
   }
 
   addIngredientHandler = (type) => {
@@ -125,21 +131,26 @@ class SandwichMaker extends Component {
       disableInfo[key] = disableInfo[key] <= 0
     }
 
-    let orderSummary =  <OrderSummary 
+    let orderSummary = null;
+
+    if(this.state.ingredients) {
+      orderSummary =  <OrderSummary 
       purchaseCancelled={this.purchaseCancelHandler}
       purchaseContinued={this.purchaseContinueHandler}
       price={this.state.totalPrice}
       ingredients={this.state.ingredients} />
-    
-    if (this.state.loading) {
-      orderSummary = <Spinner />
     }
 
-    return (
+    if (this.state.loading) {
+      orderSummary = this.state.error ? <p>Ingredients Can't be loaded!</p> : <Spinner />
+    }
+    
+
+    let sandwich = <Spinner />
+
+    if(this.state.ingredients) {
+      sandwich =
       <Aux>
-        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-         {orderSummary}
-        </Modal>
         <Sandwich ingredients={this.state.ingredients} />
         <BuildControls 
           ingredientAdded={this.addIngredientHandler}
@@ -149,6 +160,17 @@ class SandwichMaker extends Component {
           purchasable={this.state.purchasable}
           ordered={this.purchaseHandler}
         />
+      </Aux> 
+      
+    }
+    
+
+    return (
+      <Aux>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+         {orderSummary}
+        </Modal>
+        {sandwich}
       </Aux>
     );
   }
