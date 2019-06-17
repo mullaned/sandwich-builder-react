@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 import classes from './Sandwich.css'
 import SandwichIngredient from './SandwichIngredient/SandwichIngredient'
 
@@ -30,4 +31,4 @@ const sandwich = (props) => {
   );
 }
 
-export default sandwich;
+export default withRouter(sandwich);
