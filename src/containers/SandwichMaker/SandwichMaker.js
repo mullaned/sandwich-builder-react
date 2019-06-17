@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom'
 import Aux from '../../hoc/Auxilary'
 import Sandwich from '../../components/Sandwich/Sandwich'
 import BuildControls from '../../components/Sandwich/BuildControls/BuildControls'
@@ -121,6 +120,8 @@ class SandwichMaker extends Component {
     //   .catch(error => {
     //     this.setState({loading: false, purchasing: false})
     //   });
+
+    this.props.history.push('/checkout');
   }
 
   render() {
