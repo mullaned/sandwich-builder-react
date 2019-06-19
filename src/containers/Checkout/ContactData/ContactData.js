@@ -15,7 +15,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Your Name'
         },
-        value: ''
+      value: ''
       },
       street: {
         elementType: 'input',
@@ -23,7 +23,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Street'
         },
-        value: ''
+      value: ''
       },
       eircode: {
         elementType: 'input',
@@ -31,7 +31,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Eircode'
         },
-        value: ''
+      value: ''
       },
       country: {
         elementType: 'input',
@@ -39,7 +39,7 @@ class ContactData extends Component {
           type: 'text',
           placeholder: 'Country'
         },
-        value: ''
+      value: ''
       },
       email: {
         elementType: 'input',
@@ -47,7 +47,7 @@ class ContactData extends Component {
           type: 'email',
           placeholder: 'Your E-Mail'
         },
-        value: ''
+      value: ''
       },
       deliveryMethod: {
         elementType: 'select',
@@ -57,7 +57,7 @@ class ContactData extends Component {
             {value: 'cheapest', displayValue: 'Cheapest'}
           ]
         },
-        value: ''
+      value: ''
       } 
     },
 
@@ -67,10 +67,15 @@ class ContactData extends Component {
   orderHandler = (event) => {
     event.preventDefault();
     this.setState({loading: true});
+    const formData = {}
+    for (let formElementIdentifier in this.state.orderForm){
+      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+    }
+
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      
+      orderData: formData
       
     }
 
@@ -108,7 +113,7 @@ class ContactData extends Component {
     }
 
     let form = (
-      <form>
+      <form onSubmit={this.orderHandler}>
         {formElementsArray.map(formElement => (
           <Input 
             key={formElement.id}
