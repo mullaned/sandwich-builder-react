@@ -57,22 +57,8 @@ class SandwichMaker extends Component {
   }
 
   purchaseContinueHandler = () => {
-   
 
-    const queryParams = [];
-    for (let i in this.state.ingredients) {
-      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
-    }
-
-    // push the total price to the params aswell
-    queryParams.push('price=' + this.state.totalPrice)
-
-    const queryString = queryParams.join('&');
-
-    this.props.history.push({
-      pathname: '/checkout',
-      search: '?' + queryString
-    });
+    this.props.history.push('/checkout');
   }
 
   render() {
