@@ -26,13 +26,13 @@ class SandwichMaker extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://sandwich-maker-388c0.firebaseio.com/ingredients.json')
-      .then(response => {
-        this.setState({ingredients: response.data});
-      })
-      .catch(error => {
-        this.setState({error: true})
-      });
+    // axios.get('https://sandwich-maker-388c0.firebaseio.com/ingredients.json')
+    //   .then(response => {
+    //     this.setState({ingredients: response.data});
+    //   })
+    //   .catch(error => {
+    //     this.setState({error: true})
+    //   });
   }
 
   addIngredientHandler = (type) => {
