@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Route, Switch} from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import SandwichMaker from './containers/SandwichMaker/SandwichMaker'
-import Checkout from './containers/Checkout/Ckeckout'
+import Checkout from './containers/Checkout/Checkout'
 import Orders from './containers/Orders/Orders'
 
 class App extends Component {
